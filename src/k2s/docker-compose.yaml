@@ -1,0 +1,17 @@
+name: samdul
+services:
+  blog:
+    build: ./docker/httpd
+    ports:
+      - "8080:80"
+    deploy:
+      mode: replicated
+      replicas: 2
+
+  load_balancer:
+    build: ./docker/nginx
+    container_name: blog-lb
+    ports:
+      - 8949:80
+    depends_on:
+      - blog
